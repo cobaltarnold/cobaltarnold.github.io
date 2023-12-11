@@ -1,6 +1,9 @@
-html, body {
+* {
     margin: 0;
     padding: 0;
+}
+
+body {
     overflow-x: hidden;
 }
 
@@ -19,6 +22,7 @@ img {
     top: 0;
     position: absolute;
     z-index: -1;
+    user-select: none;
 }
 
 #sketchbook {
@@ -173,7 +177,7 @@ img {
 
 .imgdesc {
     display: none;
-    z-index: 99;
+    z-index: 4;
     position: absolute;
     left: 1rem;
     bottom: 1rem;
@@ -263,6 +267,24 @@ img {
     #artbox {
         flex-direction: column;
     }
+
+    .info {
+        display: grid;
+    }
+
+    .images {
+        white-space: nowrap;
+        overflow-y: hidden !important;
+        overflow-x: scroll;
+    }
+
+    .images img {
+        position: relative;
+        max-width: 85vw;
+        max-height: 100%;
+        padding: 0;
+        padding-right: 2.5vh;
+    }
 }
 
 #selfportrait {
@@ -276,6 +298,7 @@ img {
 
 #canvas {
     position: absolute;
+    user-select: none;
 }
 
 #canvas:hover {
