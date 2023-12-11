@@ -276,6 +276,7 @@ img {
         white-space: nowrap;
         overflow-y: hidden !important;
         overflow-x: scroll;
+        width: auto !important;
     }
 
     .images img {
