@@ -103,40 +103,6 @@ img {
     left: 50%;
 }
 
-#toggle {
-    position: absolute;
-    transform: translate(0, -50%);
-    top: 50%;
-    right: 0;
-    margin-right: 2rem;
-}
-
-#toggle a {
-    display: grid;
-    width: fit-content;
-    text-align: right;
-    right: 0;
-    padding: 0.25rem;
-    margin-block: 0.25rem;
-    text-decoration: none;
-    font-weight: bolder;
-    font-family: sans-serif;
-    color: #222;
-    font-size: 1.25rem;
-}
-
-#toggle a:hover {
-    background-color: #0002;
-    border-radius: 3px;
-}
-
-#toggle a.active {
-    font-weight: lighter;
-    color: #777;
-    user-select: none;
-    background-color: transparent;
-}
-
 #artbox {
     margin-left: 20vw;
     margin-right: 20vw;
