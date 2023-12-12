@@ -5,7 +5,7 @@ function rotate() {
   if (n == 21) {
     n = 1;
   }
-  document.getElementById("artimg").src = "../assets/artwork/ARTWORKLayer " + n + ".svg";
+  document.getElementById("artimg").src = "../assets/artwork/artwork" + n + ".png";
   n++;
   setTimeout(rotate, 150);
 }
