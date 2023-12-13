@@ -8,10 +8,11 @@ canvas.height = parent.offsetHeight;
 var cx = canvas.width/2;
 var cy = canvas.height/2;
 
-var x = -200;
-var y = -200;
-var w = 200;
-var h = 200;
+let boxsize = canvas.height/3;
+var x = boxsize*-1;
+var y = boxsize*-1;
+var w = boxsize;
+var h = boxsize;
 var deg = 0;
 
 
@@ -142,4 +143,9 @@ function getMouse(e, canvas) {
 addEventListener("resize", (e) => {
     canvas.width = parent.offsetWidth;
     canvas.height = parent.offsetHeight;
+    boxsize = canvas.height/3;
+    x = boxsize*-1;
+    y = boxsize*-1;
+    w = boxsize;
+    h = boxsize;
 });

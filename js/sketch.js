@@ -14,7 +14,7 @@ let img4;
 let images = [];
 
 function setup() {
-  canvas = createCanvas(window.innerWidth, window.innerHeight);
+  canvas = createCanvas(window.innerWidth, window.innerHeight/1.2);
   img0 = new Image();
   img0.src = "assets/icons/bar.png"
   images.push(img0);
@@ -178,7 +178,7 @@ class cursor {
 }
 
 function windowResized() {
-  resizeCanvas(window.innerWidth, window.innerHeight);
+  resizeCanvas(window.innerWidth, window.innerHeight/1.2);
 }
 
 const about = document.getElementById("about");
