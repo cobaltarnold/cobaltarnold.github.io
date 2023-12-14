@@ -117,21 +117,6 @@ img {
     to {text-shadow: 0 0 50px transparent;}
 }
 
-#artworkheader {
-    display: block;
-    position: relative;
-    max-height: 15vh;
-    padding-top: 1rem;
-}
-
-#artworkheader img {
-    position: relative;
-    height: 15vh;
-    width: auto;
-    transform: translate(-50%, 0);
-    left: 50%;
-}
-
 #artbox {
     margin-left: 20vw;
     margin-right: 20vw;
