@@ -15,18 +15,46 @@ var w = boxsize;
 var h = boxsize;
 var deg = 0;
 
+var touchx = 0;
+var touchy = 0;
 
 canvas.addEventListener('mousemove', function(e) {
     var mouse = getMouse(e, canvas);
     cx = mouse.x;
     cy = mouse.y;
-    redraw(mouse);
+    redraw();
+}, false);
+
+canvas.addEventListener('touchstart', function(e){
+    var offset = getOffset(e, canvas);
+    var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+    cx = parseInt(touchobj.clientX) - offset.x// get x position of touch point relative to left edge of browser
+    cy = parseInt(touchobj.clientY) - offset.y// get x position of touch point relative to left edge of browser
+    e.preventDefault()
+    redraw();
+}, false);
+
+canvas.addEventListener('touchmove', function(e){
+    var offset = getOffset(e, canvas);
+    var touchobj = e.changedTouches[0] // reference first touch point for this event
+    cx = parseInt(touchobj.clientX) - offset.x
+    cy = parseInt(touchobj.clientY) - offset.y
+    e.preventDefault()
+    redraw();
+}, false);
+
+canvas.addEventListener('touchend', function(e){
+    var offset = getOffset(e, canvas);
+    var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+    cx = parseInt(touchobj.clientX) - offset.x// get x position of touch point relative to left edge of browser
+    cy = parseInt(touchobj.clientY) - offset.y// get x position of touch point relative to left edge of browser
+    e.preventDefault()
+    redraw();
 }, false);
 
 canvas.addEventListener("wheel", (e) => {
     getDegrees(e.deltaY);
-    var mouse = getMouse(e, canvas);
-    redraw(mouse);
+    redraw();
 });
 
 function clear() {
@@ -38,7 +66,7 @@ function clear() {
     ctx.restore();
 }
 
-function redraw(mouse) {
+function redraw() {
     clear();
 
     canvas.width = canvas.width;
@@ -122,38 +150,41 @@ function getMouse(e, canvas) {
         offsetY = 0,
         mx, my;
 
-    if(e.type == 'touchstart' || e.type == 'touchend' || e.type == 'touchcancel') { 
-        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-        mx = touch.pageX;
-        my = touch.pageY;
-        console.log(mx, my);
-        e.preventDefault();
-    } else if (e.type == 'touchmove') {
-        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-        mx = parseInt(touch.pageX) - mx;
-        my = parseInt(touch.pageY) - my;
-        console.log(mx, my);
-        e.preventDefault();
-    } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
-        mx = e.clientX;
-        my = e.clientY;
-    } 
-    
     // Compute the total offset. It's possible to cache this if you want
-    // if (element.offsetParent !== undefined) {
-    //     do {
-    //         offsetX += element.offsetLeft;
-    //         offsetY += element.offsetTop;
-    //     } while ((element = element.offsetParent));
-    // }
+    if (element.offsetParent !== undefined) {
+        do {
+            offsetX += element.offsetLeft;
+            offsetY += element.offsetTop;
+        } while ((element = element.offsetParent));
+    }
 
-    // mx = e.pageX - offsetX;
-    // my = e.pageY - offsetY;
+    mx = e.pageX - offsetX;
+    my = e.pageY - offsetY;
 
     // We return a simple javascript object with x and y defined
     return {
         x: mx,
         y: my
+    };
+}
+
+function getOffset(e, canvas) {
+    var element = canvas,
+        offsetX = 0,
+        offsetY = 0
+
+    // Compute the total offset. It's possible to cache this if you want
+    if (element.offsetParent !== undefined) {
+        do {
+            offsetX += element.offsetLeft;
+            offsetY += element.offsetTop;
+        } while ((element = element.offsetParent));
+    }
+
+    // We return a simple javascript object with x and y defined
+    return {
+        x: offsetX,
+        y: offsetY
     };
 }
 
@@ -166,32 +197,3 @@ addEventListener("resize", (e) => {
     w = boxsize;
     h = boxsize;
 });
-
-// window.addEventListener('load', function(){
- 
-//     var box1 = document.getElementById('box1')
-//     var statusdiv = document.getElementById('statusdiv')
-//     var startx = 0
-//     var dist = 0
- 
-//     box1.addEventListener('touchstart', function(e){
-//         var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
-//         startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
-//         statusdiv.innerHTML = 'Status: touchstart<br> ClientX: ' + startx + 'px'
-//         e.preventDefault()
-//     }, false)
- 
-//     box1.addEventListener('touchmove', function(e){
-//         var touchobj = e.changedTouches[0] // reference first touch point for this event
-//         dist = parseInt(touchobj.clientX) - startx
-//         statusdiv.innerHTML = 'Status: touchmove<br> Horizontal distance traveled: ' + dist + 'px'
-//         e.preventDefault()
-//     }, false)
- 
-//     box1.addEventListener('touchend', function(e){
-//         var touchobj = e.changedTouches[0] // reference first touch point for this event
-//         statusdiv.innerHTML = 'Status: touchend<br> Resting x coordinate: ' + touchobj.clientX + 'px'
-//         e.preventDefault()
-//     }, false)
- 
-// }, false)
