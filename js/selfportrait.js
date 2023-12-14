@@ -122,16 +122,25 @@ function getMouse(e, canvas) {
         offsetY = 0,
         mx, my;
 
+    if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel'){
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        mx = touch.pageX;
+        my = touch.pageY;
+    } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
+        mx = e.clientX;
+        my = e.clientY;
+    } 
+    
     // Compute the total offset. It's possible to cache this if you want
-    if (element.offsetParent !== undefined) {
-        do {
-            offsetX += element.offsetLeft;
-            offsetY += element.offsetTop;
-        } while ((element = element.offsetParent));
-    }
+    // if (element.offsetParent !== undefined) {
+    //     do {
+    //         offsetX += element.offsetLeft;
+    //         offsetY += element.offsetTop;
+    //     } while ((element = element.offsetParent));
+    // }
 
-    mx = e.pageX - offsetX;
-    my = e.pageY - offsetY;
+    // mx = e.pageX - offsetX;
+    // my = e.pageY - offsetY;
 
     // We return a simple javascript object with x and y defined
     return {
