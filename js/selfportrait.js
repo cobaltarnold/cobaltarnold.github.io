@@ -122,10 +122,18 @@ function getMouse(e, canvas) {
         offsetY = 0,
         mx, my;
 
-    if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel'){
+    if(e.type == 'touchstart' || e.type == 'touchend' || e.type == 'touchcancel') { 
         var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
         mx = touch.pageX;
         my = touch.pageY;
+        console.log(mx, my);
+        e.preventDefault();
+    } else if (e.type == 'touchmove') {
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        mx = parseInt(touch.pageX) - mx;
+        my = parseInt(touch.pageY) - my;
+        console.log(mx, my);
+        e.preventDefault();
     } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
         mx = e.clientX;
         my = e.clientY;
@@ -158,3 +166,32 @@ addEventListener("resize", (e) => {
     w = boxsize;
     h = boxsize;
 });
+
+// window.addEventListener('load', function(){
+ 
+//     var box1 = document.getElementById('box1')
+//     var statusdiv = document.getElementById('statusdiv')
+//     var startx = 0
+//     var dist = 0
+ 
+//     box1.addEventListener('touchstart', function(e){
+//         var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+//         startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+//         statusdiv.innerHTML = 'Status: touchstart<br> ClientX: ' + startx + 'px'
+//         e.preventDefault()
+//     }, false)
+ 
+//     box1.addEventListener('touchmove', function(e){
+//         var touchobj = e.changedTouches[0] // reference first touch point for this event
+//         dist = parseInt(touchobj.clientX) - startx
+//         statusdiv.innerHTML = 'Status: touchmove<br> Horizontal distance traveled: ' + dist + 'px'
+//         e.preventDefault()
+//     }, false)
+ 
+//     box1.addEventListener('touchend', function(e){
+//         var touchobj = e.changedTouches[0] // reference first touch point for this event
+//         statusdiv.innerHTML = 'Status: touchend<br> Resting x coordinate: ' + touchobj.clientX + 'px'
+//         e.preventDefault()
+//     }, false)
+ 
+// }, false)
