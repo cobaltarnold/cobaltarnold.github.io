@@ -11,6 +11,13 @@ function rotate() {
 }
 
 $(document).ready(function(){
+  $.each($('img'), function() {
+    if ( $(this).attr('data-src') && $(this).offset().top < ($(window).scrollTop() + $(window).height() + 100) ) {
+        var source = $(this).data('src');
+        $(this).attr('src', source);
+        $(this).removeAttr('data-src');
+    }
+  });
   $(".piece").click(function(){
      $(".info#"+this.id).addClass("shown");
      $(".infobg").addClass("shown");
@@ -29,4 +36,14 @@ $(document).ready(function(){
     $("#sketchbook").css("margin-right", "0");
     e.stopPropagation();
   } );
+});
+
+$(window).scroll(function() {
+  $.each($('img'), function() {
+      if ( $(this).attr('data-src') && $(this).offset().top < ($(window).scrollTop() + $(window).height() + 100) ) {
+          var source = $(this).data('src');
+          $(this).attr('src', source);
+          $(this).removeAttr('data-src');
+      }
+  });
 });
