@@ -18,7 +18,3 @@ $(document).ready(function(){
     e.stopPropagation();
   } );
 });
-
-$(function() {
-  $('.lazy').Lazy();
-});
