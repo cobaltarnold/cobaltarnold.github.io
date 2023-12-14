@@ -1,3 +1,4 @@
+window.addEventListener('load', function(){
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -15,8 +16,8 @@ var w = boxsize;
 var h = boxsize;
 var deg = 0;
 
-var touchx = 0;
-var touchy = 0;
+var startx;
+var starty;
 
 canvas.addEventListener('mousemove', function(e) {
     var mouse = getMouse(e, canvas);
@@ -30,6 +31,9 @@ canvas.addEventListener('touchstart', function(e){
     var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
     cx = parseInt(touchobj.clientX) - offset.x// get x position of touch point relative to left edge of browser
     cy = parseInt(touchobj.clientY) - offset.y// get x position of touch point relative to left edge of browser
+    startx = cx;
+    starty = cy;
+    startTime = new Date().getTime() // record time when finger first makes contact with surface
     e.preventDefault()
     redraw();
 }, false);
@@ -46,11 +50,27 @@ canvas.addEventListener('touchmove', function(e){
 canvas.addEventListener('touchend', function(e){
     var offset = getOffset(e, canvas);
     var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
-    cx = parseInt(touchobj.clientX) - offset.x// get x position of touch point relative to left edge of browser
-    cy = parseInt(touchobj.clientY) - offset.y// get x position of touch point relative to left edge of browser
+    if (startx == parseInt(touchobj.clientX) - offset.x && starty == parseInt(touchobj.clientY) - offset.y) {
+        $(".info#z").addClass("shown");
+        $(".infobg").addClass("shown");
+        $("html, body").css("overflow-y", "hidden");
+        $("html, body").css("margin-right", "8px");
+        $("html, body").css("background", "gray");
+    }
     e.preventDefault()
-    redraw();
 }, false);
+
+window.addEventListener("deviceorientation", handleOrientation, true);
+
+function handleOrientation(event) {
+    const absolute = event.absolute;
+    const alpha = event.alpha;
+    const beta = event.beta;
+    const gamma = event.gamma;
+  
+    getDegrees(absolute);
+    redraw();
+}
 
 canvas.addEventListener("wheel", (e) => {
     getDegrees(e.deltaY);
@@ -197,3 +217,5 @@ addEventListener("resize", (e) => {
     w = boxsize;
     h = boxsize;
 });
+
+}, false)
