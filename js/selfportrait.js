@@ -68,7 +68,7 @@ function handleOrientation(event) {
     const beta = event.beta;
     const gamma = event.gamma;
   
-    getDegrees(absolute);
+    getDegrees(event.alpha);
     redraw();
 }
 
