@@ -78,7 +78,7 @@ function permission () {
     } else {
         alert( "DeviceMotionEvent is not defined" );
     }
-    $("#request").removeClass("shown");
+    // $("#request").removeClass("shown");
 }
 const btn = document.getElementById( "request" );
 btn.addEventListener( "click", permission );
