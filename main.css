@@ -238,13 +238,13 @@ img {
     margin-bottom: 2rem;
 }
 
-/* #request {
+#request {
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;
     visibility: hidden;
-} */
+}
 
 .shown {
     z-index: 99;
