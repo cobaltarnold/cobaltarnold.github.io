@@ -1,8 +1,7 @@
 window.addEventListener('load', function(){
 if (isMobileTablet()) {
     $("#request").addClass("shown");
-} else {
-
+    console.log('a');
 }
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -79,6 +78,7 @@ function permission () {
     } else {
         alert( "DeviceMotionEvent is not defined" );
     }
+    $("#request").removeClass("shown");
 }
 const btn = document.getElementById( "request" );
 btn.addEventListener( "click", permission );
@@ -93,12 +93,15 @@ function isMobileTablet(){
 }
 
 function handleOrientation(event) {
-    const absolute = event.absolute;
-    const alpha = event.alpha;
-    const beta = event.beta;
-    const gamma = event.gamma;
+    var a = event.alpha;
+    let limit = 20;
+    if (a < limit*-1) {
+        a = limit*-1;
+    } else if (a > limit) {
+        a = limit;
+    }
   
-    getDegrees(event.alpha);
+    getDegrees(a);
     redraw();
 }
 

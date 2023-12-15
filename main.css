@@ -248,7 +248,7 @@ img {
 
 .shown {
     z-index: 99;
-    visibility: visible;
+    visibility: visible !important;
 }
 
 @media all and (max-width:700px) {
