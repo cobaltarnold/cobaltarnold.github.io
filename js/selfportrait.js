@@ -60,9 +60,24 @@ canvas.addEventListener('touchend', function(e){
     e.preventDefault()
 }, false);
 
-window.addEventListener("deviceorientation", handleOrientation, true);
+function permission () {
+    if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+        // (optional) Do something before API request prompt.
+        DeviceMotionEvent.requestPermission()
+            .then( response => {
+            // (optional) Do something after API prompt dismissed.
+            if ( response == "granted" ) {
+                window.addEventListener( "deviceorientation", handleOrientation, true);
+            }
+        })
+            .catch( console.error )
+    } else {
+        alert( "DeviceMotionEvent is not defined" );
+    }
+}
 
 function handleOrientation(event) {
+    permission();
     const absolute = event.absolute;
     const alpha = event.alpha;
     const beta = event.beta;
