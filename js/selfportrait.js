@@ -70,6 +70,7 @@ function permission () {
             .then( response => {
             // (optional) Do something after API prompt dismissed.
             if ( response == "granted" ) {
+                alert("motion activated");
                 window.addEventListener( "deviceorientation", handleOrientation, true);
             }
         })
