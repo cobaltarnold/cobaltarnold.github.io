@@ -101,7 +101,7 @@ function handleOrientation(event) {
         a = limit;
     }
   
-    getDegrees(a);
+    getDegrees(event.alpha);
     redraw();
 }
 
