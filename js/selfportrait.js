@@ -1,7 +1,6 @@
 window.addEventListener('load', function(){
 if (isMobileTablet()) {
     $("#request").addClass("shown");
-    console.log('a');
 }
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -78,7 +77,7 @@ function permission () {
     } else {
         alert( "DeviceMotionEvent is not defined" );
     }
-    // $("#request").removeClass("shown");
+    $("#request").removeClass("shown");
 }
 const btn = document.getElementById( "request" );
 btn.addEventListener( "click", permission );
