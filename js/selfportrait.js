@@ -75,9 +75,10 @@ function permission () {
         alert( "DeviceMotionEvent is not defined" );
     }
 }
+const btn = document.getElementById( "request" );
+btn.addEventListener( "click", permission );
 
 function handleOrientation(event) {
-    permission();
     const absolute = event.absolute;
     const alpha = event.alpha;
     const beta = event.beta;
