@@ -19,7 +19,6 @@ img {
     padding: 0;
     overflow: hidden;
     display: flex;
-    flex-direction: row wrap;
     justify-content: flex-end;
 }
   
@@ -48,7 +47,7 @@ img {
 .sketch {
     margin: 0;
     padding: 0;
-    position: absolute;
+    position: relative;
     display: contents;
     z-index: -1;
     user-select: none;
