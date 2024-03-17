@@ -5,6 +5,17 @@ html, body {
 }
 
 .p5Canvas {
+    transform: translate(-50%, -50%);
+    position: relative;
+    top: 50vh;
+    left: 50vw;
     max-height: 90vh;
+    max-width: 90vw;
     width: auto !important;
+    height: auto !important;
+}
+
+.sketchparent {
+    width: 100vw;
+    height: 100vh;
 }

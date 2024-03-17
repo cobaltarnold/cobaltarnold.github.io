@@ -195,8 +195,6 @@ imgarray[14] = new Image(canvas.width, canvas.height);
 imgarray[14].src = "../assets/work/myself/me3.png";
 imgarray[15] = new Image(canvas.width, canvas.height);
 imgarray[15].src = "../assets/work/myself/me2.png";
-
-
 function getMouse(e, canvas) {
     var element = canvas,
         offsetX = 0,
@@ -250,5 +248,4 @@ addEventListener("resize", (e) => {
     w = boxsize;
     h = boxsize;
 });
-
 }, false)
