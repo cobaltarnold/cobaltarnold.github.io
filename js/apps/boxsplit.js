@@ -3,11 +3,13 @@ var imgw;
 var imgh;
 let input;
 let button;
+let button2;
 let slider;
-let pixarray = [];
+let slidertext;
+let brightarray = [];
 
 let boxes = [];
-let threshold = 60;
+let threshold = 55;
 let minsize = 5;
 let attempts = 0;
 let attemptlim = 1000;
@@ -15,13 +17,19 @@ let attemptlim = 1000;
 function setup() {
     input = createFileInput(handleImage);
     button = createButton('process image');
+    button2 = createButton('save image');
     slider = createSlider(1, 75, 55);
+    slidertext = createDiv("threshold: "+String(threshold));
     input.position(0, 0);
-    button.position(0, 20);
-    slider.position(7, 45);
+    slider.position(7, 25);
+    slidertext.position(8, 45);
+    button.position(0, 70);
+    button2.position(0, 90);
     slider.size(255);
     button.hide();
+    button2.hide();
     slider.hide();
+    slidertext.hide();
 
     let canvas = document.createElement("canvas");
     let ctx = canvas.getContext("2d", { 
@@ -36,16 +44,30 @@ function setup() {
     }
     background(0);
     noFill();
+    noSmooth();
     stroke(0);
     strokeWeight(1);
 
     button.mousePressed(() => {
-        process(pixarray);
+        process();
     });
 
+    button2.mousePressed(() => {
+        save('boxsplit');
+    });
+
+    slider.mouseMoved(() => {
+        threshold = slider.value();
+        slidertext.html("threshold: "+String(threshold));
+    });
+
+    slider.mouseReleased(() => {
+        threshold = slider.value();
+        slidertext.html("threshold: "+String(threshold));
+    });
 }
 
-function process(array) {
+function process() {
     attempts = 0;
     initboxes();
     console.log("sorting");
@@ -99,7 +121,7 @@ function pixbrightness(x, y, s) {
     let test = 0;
     for (let i = int(x); i < int(x)+int(s); i++) {
         for (let j = int(y); j < int(y)+int(s); j++) {
-            test = brightness(pixarray[index(i, j)]);
+            test = brightarray[index(i, j)];
             if (test < darkest) {
                 darkest = test;
             }
@@ -120,12 +142,14 @@ function handleImage(file) {
     if (file.type === 'image') {
         img = loadImage(file.data, 
                         function(){
-                            pixarray = [];
+                            brightarray = [];
                             attempts = 0;
                             imgUpdate();
                             resizeCanvas(imgw, imgh);
                             button.show();
+                            button2.show();
                             slider.show();
+                            slidertext.show();
                             image(img, 0, 0);
                         });
       }
@@ -151,17 +175,16 @@ function imgUpdate() {
     imgw = img.width;
     imgh = img.height;
     console.log(imgw, imgh);
-    pixtoarray(img, pixarray);
+    pixtoarray(img, brightarray);
 }
 
 function pixtoarray(img, array) {
     console.log("pixtoarray init");
     img.loadPixels();
     for(let i = 0; i < img.pixels.length; i += 4) {
-        let col = color(img.pixels[i], img.pixels[i+1], img.pixels[i+2]);
-        array.push(col);
+        let b = brightness(color(img.pixels[i], img.pixels[i+1], img.pixels[i+2], 255));
+        brightarray.push(b);
     }
-    console.log(img.pixels.length, array.length);
     console.log("pixtoarray done");
 
     initboxes();
