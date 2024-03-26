@@ -23,6 +23,7 @@ let spread = 10;
 function setup() {
     //initilizing user inputs
     input = createFileInput(handleImage);
+    input.attribute('accept', "image/*");
     button = createButton('save image');
     slider = createSlider(1, 100, 10);
     slidertext = createDiv('mouse spread');

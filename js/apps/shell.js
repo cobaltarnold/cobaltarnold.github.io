@@ -14,6 +14,7 @@ let brightarray = [];
 function setup() {
     //initilizing user inputs
     input = createFileInput(handleImage);
+    input.attribute('accept', "image/*");
     button = createButton('process image');
     button2 = createButton('save image');
     input.position(0, 0);

@@ -16,6 +16,7 @@ let attemptlim = 1000;
 
 function setup() {
     input = createFileInput(handleImage);
+    input.attribute('accept', "image/*");
     button = createButton('process image');
     button2 = createButton('save image');
     slider = createSlider(1, 75, 55);

@@ -1,56 +1,151 @@
-// Fluid Simulation
-// Daniel Shiffman
-// https://thecodingtrain.com/CodingChallenges/132-fluid-simulation.html
-// https://youtu.be/alhpH6ECFvQ
-
-// This would not be possible without:
-// Real-Time Fluid Dynamics for Games by Jos Stam
-// http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
-// Fluid Simulation for Dummies by Mike Ash
-// https://mikeash.com/pyblog/fluid-simulation-for-dummies.html
+//empty img variable to be filled with user input
+let img;
+//variables to be used to resize the canvas to image dimensions
+var imgw;
+var imgh;
+let size = 600;
+//user inputs
+let input;
+let button2;
+//array to fill with pixel colors
+let brightarray = [];
 
 let fluid;
-let img;
 let word = "";
 let str = 0.03;
 
 function setup() {
+    //initilizing user inputs
+    input = createFileInput(handleImage);
+    input.attribute('accept', "image/*");
+    button2 = createButton('save image');
+    input.position(0, 0);
+    button2.position(0, 21);
+    button2.hide();
+
     let canvas = document.createElement("canvas");
-    resizeCanvas(600, 600);
-    // let ctx = canvas.getContext("2d", { 
-    //     alpha: false,
-    //     willReadFrequently: true
-    // });
-    // if (ctx.getContextAttributes) {
-    //     const attributes = ctx.getContextAttributes();
-    //     console.log(JSON.stringify(attributes));
-    // } else {
-    //     console.log("CanvasRenderingContext2D.getContextAttributes() is not supported");
-    // }
+    resizeCanvas(size, size);
+    let ctx = canvas.getContext("2d", { 
+        alpha: false,
+        willReadFrequently: true
+    });
+    if (ctx.getContextAttributes) {
+        const attributes = ctx.getContextAttributes();
+        console.log(JSON.stringify(attributes));
+    } else {
+        console.log("CanvasRenderingContext2D.getContextAttributes() is not supported");
+    }
     frameRate(22);
-    fluid = new Fluid(0.5, 0.0000001, 0.000000003);
+    fluid = new Fluid(0.5, 0.0000001, 0.00001);
+
+    button2.mousePressed(() => {
+        save('fluidimg');
+    });
+}
+
+// Create an image if the file is an image.
+function handleImage(file) {
+    if (file.type === 'image') {
+        img = loadImage(file.data, 
+                        function(){
+                            //reset pixel array
+                            brightarray = [];
+                            fluid = new Fluid(0.5, 0.0000001, 0.00001);
+                            imgUpdate();
+                            button2.show();
+                            image(img, 0, 0);
+                        });
+    }
+}
+
+//method to downscale image and update width/height values
+function imgUpdate() {
+    console.log("updating");
+    if (img.width > img.height) {
+        img.resize(0, size);
+    } else {
+        img.resize(size, 0);
+    }
+
+    img.resize(int(img.width), int(img.height));
+    imgw = img.width;
+    imgh = img.height;
+    console.log(imgw, imgh);
+    pixtoarray(img);
+}
+
+//method to fill an array with the colors of each pixel of an image
+function pixtoarray(img) {
+    console.log("pixtoarray init");
+    img.loadPixels();
+    for (let i = 0; i < img.pixels.length; i += 4) {
+        let b = brightness(color(img.pixels[i], img.pixels[i+1], img.pixels[i+2]));
+        brightarray.push(b);
+    }
+
+    let woff = (imgw - size) / 2;
+    let hoff = (imgh - size) / 2;
+    console.log(woff, hoff);
+    for (let i = woff; i < imgw-woff; i++) {
+        for (let j = hoff; j < imgh-hoff; j++) {
+            let b = brightarray[i + j*imgw];
+            fluid.addDensity(int((i-woff)/SCALE), int((j-hoff)/SCALE), b/50);
+        }
+    }
+
+    console.log("pixtoarray done");
 }
 
 function draw() {
-
-    let mousev = new p5.Vector((mouseX-pmouseX)*str, (mouseY-pmouseY)*str);
-    let mx = int(mouseX / SCALE);
-    let my = int(mouseY / SCALE);
-    fluid.addVelocity(mx, my, mousev.x, mousev.y);
-    fluid.addDensity(mx, my, 100);
+    if (mouseX > 0 && mouseY > 0 && mouseX < size && mouseY < size) {
+        let mousev = new p5.Vector((mouseX-pmouseX)*str, (mouseY-pmouseY)*str);
+        let mx = int(mouseX / SCALE);
+        let my = int(mouseY / SCALE);
+        fluid.addVelocity(mx, my, mousev.x, mousev.y);
+    }
+    
+    let woff = (imgw - size) / 2;
+    let hoff = (imgh - size) / 2;
+    for (let i = woff; i < imgw-woff; i++) {
+        for (let j = hoff; j < imgh-hoff; j++) {
+            let b = brightarray[i + j*imgw];
+            fluid.addDensity(int((i-woff)/SCALE), int((j-hoff)/SCALE), b/10000);
+        }
+    }
     
     fluid.step();
     fluid.renderD();
 }
 
+//method to assign array of colors to pixels of an image
+function arraytopix(img, array) {
+    img.loadPixels();
+    for(let i = 0; i < array.length; i += 1) {
+        // Red.
+        img.pixels[i*4] = array[i][0];
+        // Green.
+        img.pixels[i*4 + 1] = array[i][1];
+        // Blue.
+        img.pixels[i*4 + 2] = array[i][2];
+        // Alpha.
+        img.pixels[i*4 + 3] = array[i][3];
+    }
+    img.updatePixels();
+}
+
+//method to locate a 2d value in a 1d array
+function index(x, y) {
+  return x + y * width;
+}
+
 //--------------------------------FLUID CLASS----------------------------------//
 
-let N = 60;
+let N = 100;
 let iter = 16;
-let SCALE = 10;
+let SCALE = 6;
 let t = 0;
 
-// function to use 1D array and fake the extra two dimensions --> 3D
+// function to use 1D array and fake the extra dimension --> 2D
 function IX(x, y) {
   return x + y * N;
 }

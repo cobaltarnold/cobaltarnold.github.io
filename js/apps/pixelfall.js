@@ -14,6 +14,7 @@ let threshold = 55;
 
 function setup() {
     input = createFileInput(handleImage);
+    input.attribute('accept', "image/*");
     button = createButton('process image');
     button2 = createButton('save image');
     slider = createSlider(1, 254, 55);

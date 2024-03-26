@@ -20,6 +20,7 @@ let img0;
 
 function setup() {
     input = createFileInput(handleImage);
+    input.attribute('accept', "image/*");
     invbox = createCheckbox('invert');
     debbox = createCheckbox('brain');
     button = createButton('save image');
