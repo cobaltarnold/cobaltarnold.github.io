@@ -125,11 +125,15 @@ img {
     position: relative;
 }
 
+.app {
+    padding-bottom: 1rem;
+}
+
 .col {
     margin: 1rem;
     flex-grow: 1;
     flex-basis: 0;
-    max-width: 50vw;
+    /* max-width: 50vw; */
 }
 
 .col img {
@@ -139,6 +143,18 @@ img {
     max-height: 90vh;
     transform: translate(-50%, 0);
     left: 50%;
+}
+
+.preview img {
+    padding: 0;
+    max-height: 20vh;
+    transform: translate(50%, 0);
+    left: -50%;
+}
+
+.desc {
+    padding-left: 1rem;
+    padding-top: 0.5rem;
 }
 
 .col img:hover {
@@ -161,6 +177,11 @@ img {
     left: 1rem;
     bottom: 1rem;
     font-size: 1rem;
+    padding-right: 1rem;
+}
+
+.dark {
+    color: white;
 }
 
 .info {

@@ -38,6 +38,7 @@ function setup() {
     }
   }
   noStroke();
+  noSmooth();
 }
 
 function draw() {
@@ -159,9 +160,9 @@ class cursor {
     this.acc.add(this.align(boids, i).mult(1.7));
     this.acc.add(this.cohesion(boids, i).mult(1.4));
     this.acc.add(this.separation(boids).mult(1.9));
-    if (mouseIsPressed) {
-      this.acc.add(this.mouse().mult(0.5));
-    }
+    // if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+    //   this.acc.add(this.mouse().mult(0.5));
+    // }
     this.acc.add(this.edges(i).mult(1.5));
   }
   
