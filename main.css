@@ -53,6 +53,11 @@ img {
     user-select: none;
 }
 
+#blurb {
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
 #sketchbook {
     animation-name: shrink;
     animation-duration: 0.5s;
@@ -121,19 +126,30 @@ img {
     margin-right: 20vw;
 }
 
+#toolbox {
+    justify-content: center;
+}
+
 .piece {
     position: relative;
 }
 
 .app {
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.app:hover {
+    background-color: #00000011;
 }
 
 .col {
     margin: 1rem;
     flex-grow: 1;
     flex-basis: 0;
-    /* max-width: 50vw; */
+}
+
+#toolbox .col {
+    max-width: 35rem;
 }
 
 .col img {
@@ -148,8 +164,15 @@ img {
 .preview img {
     padding: 0;
     max-height: 20vh;
+    min-height: max-content;
+    min-width: 20vh;
     transform: translate(50%, 0);
     left: -50%;
+    display: block;
+}
+
+.col .preview img:hover {
+    cursor: pointer;
 }
 
 .desc {
@@ -163,6 +186,11 @@ img {
 
 .col img:hover + .imgdesc {
     display: block;
+}
+
+.col a {
+    text-decoration: none;
+    color: black;
 }
 
 .imgdesc:hover {

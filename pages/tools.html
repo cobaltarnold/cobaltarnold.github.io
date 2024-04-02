@@ -23,34 +23,72 @@
         </ul>
     </header>
     <div class="infobg"></div>
-    <div id="artbox" class="flex">
+    <div id="toolbox" class="flex">
       <div class="col">
-        <div class="app flex">
-          <div class="preview">
-            <img src="../assets/preview/box.png" alt="">
+        <a href="pixelfall.html">
+          <div class="app flex">
+            <div class="preview">
+              <img src="../assets/preview/fall.png" alt="">
+            </div>
+            <div class="desc">
+              <strong>pixelfall -</strong> pixels below a certain brightness threshold will fall to
+              the bottom of the frame, pushing brighter pixels to the top.
+            </div>
           </div>
-          <div class="desc">
-            blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah 
-          </div>
-        </div>
+        </a>
 
-        <div class="app flex">
+        <a href="boxsplit.html">
+          <div class="app flex">
             <div class="preview">
               <img src="../assets/preview/box.png" alt="">
             </div>
             <div class="desc">
-              blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah 
+              <strong>boxsplit -</strong> a grid of boxes are laid over an image, and split into four 
+              smaller boxes if there is a pixel below a certain brightness threshold within that box. 
+              those boxes are then split again and again until the image is approximated.
             </div>
-        </div>
+          </div>
+        </a>
 
-        <div class="app flex">
+        <a href="fluidimg.html">
+          <div class="app flex">
             <div class="preview">
-              <img src="../assets/preview/box.png" alt="">
+              <img src="../assets/preview/fluid.png" alt="">
             </div>
             <div class="desc">
-              blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah 
+              <strong>fluidimg -</strong> a fluid simulation is initialized and assigned density values 
+              in accordance with the brightness of the pixels of an image. the mouse can be used to push 
+              the fluid around. density is still gradually added to encourage the simulation to continue 
+              to resemble the image.
             </div>
-        </div>
+          </div>
+        </a>
+
+        <a href="circleimg.html">
+          <div class="app flex">
+            <div class="preview">
+              <img src="../assets/preview/circle.png" alt="">
+            </div>
+            <div class="desc">
+              <strong>circleimg -</strong> the canvas is populated by circles, which can be added at 
+              random positions or added manually with the mouse. the circles will not overlap and are 
+              colored to be the average color of the pixels they represent.
+            </div>
+          </div>
+        </a>
+
+        <a href="cursorimg.html">
+          <div class="app flex">
+            <div class="preview">
+              <img src="../assets/preview/cursor.png" alt="">
+            </div>
+            <div class="desc">
+              <strong>cursorimg -</strong> the likeness of an image is approximated with cursors. the 
+              cursors have two forces acting in them; one pushing them to follow the contours of an 
+              image, and another pushing them apart to avoid clustering.
+            </div>
+          </div>
+        </a>
       </div>
     </div>
 </body>
