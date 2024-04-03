@@ -144,6 +144,11 @@ function redraw() {
 }
 
 function getDegrees(theta) {
+    if (theta > 10) {
+        theta = 10;
+    } else if (theta < -10) {
+        theta = -10;
+    }
     deg += theta;
     clear();
 }
