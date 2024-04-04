@@ -46,7 +46,7 @@ img {
 .menu a.active {
     color: gray;
     font-weight: bold;
-    
+    pointer-events: none;
 }
 
 .sketch {
@@ -158,6 +158,15 @@ img {
 }
 
 .col img {
+    position: relative;
+    padding: 1rem;
+    max-width: 100%;
+    max-height: 90vh;
+    transform: translate(-50%, 0);
+    left: 50%;
+}
+
+.col video {
     position: relative;
     padding: 1rem;
     max-width: 100%;
