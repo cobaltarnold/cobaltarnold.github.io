@@ -185,7 +185,21 @@ img {
     display: block;
 }
 
+.preview video {
+    padding: 0;
+    max-height: 20vh;
+    min-height: max-content;
+    min-width: 20vh;
+    transform: translate(50%, 0);
+    left: -50%;
+    display: block;
+}
+
 .col .preview img:hover {
+    cursor: pointer;
+}
+
+.col .preview video:hover {
     cursor: pointer;
 }
 
@@ -198,7 +212,15 @@ img {
     cursor: zoom-in;
 }
 
+.col video:hover {
+    cursor: zoom-in;
+}
+
 .col img:hover + .imgdesc {
+    display: block;
+}
+
+.col video:hover + .imgdesc {
     display: block;
 }
 
@@ -240,7 +262,12 @@ img {
 .info:hover {
     cursor: zoom-out;
 }
+
 .info img:hover {
+    cursor: zoom-out;
+}
+
+.info video:hover {
     cursor: zoom-out;
 }
 
@@ -259,6 +286,16 @@ img {
 }
 
 .info img {
+    position: relative;
+    max-height: 90vh;
+    padding: 0;
+    padding-bottom: 2.5vh;
+    transform: none;
+    left: auto;
+    max-width: 100%;
+}
+
+.info video {
     position: relative;
     max-height: 90vh;
     padding: 0;
@@ -330,6 +367,14 @@ img {
     }
 
     .images img {
+        position: relative;
+        max-width: 85vw;
+        max-height: 100%;
+        padding: 0;
+        padding-right: 2.5vh;
+    }
+
+    .images video {
         position: relative;
         max-width: 85vw;
         max-height: 100%;
