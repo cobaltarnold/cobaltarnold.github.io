@@ -261,6 +261,11 @@ img {
     visibility: hidden;
 }
 
+.info a{
+    text-decoration: underline;
+    color: blue;
+}
+
 .info:hover {
     cursor: zoom-out;
 }
