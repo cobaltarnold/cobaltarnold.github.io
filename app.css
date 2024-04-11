@@ -17,6 +17,34 @@ html, body {
 }
 
 .sketchparent {
+    position: absolute;
     width: 100vw;
     height: 100vh;
+}
+
+#dropzone {
+    border: 1px dashed #00f;
+    border-radius: 0.5rem;
+    padding-inline: 1rem;
+    margin-bottom: 1rem;
+}
+
+#dropzone p {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+input[type="file"] {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-family: "Spline Sans Mono", monospace;
+}
+
+label {
+    display: flex;
+}
+
+span {
+    margin-bottom: 0 !important;
+    margin-left: 0.5rem;
 }

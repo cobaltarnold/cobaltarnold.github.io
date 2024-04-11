@@ -5,6 +5,8 @@ var imgw;
 var imgh;
 let size = 600;
 //user inputs
+var dropzone;
+let p;
 let input;
 let button2;
 //array to fill with pixel colors
@@ -16,11 +18,19 @@ let str = 0.03;
 
 function setup() {
     //initilizing user inputs
+    dropzone = select('#dropzone');
+    dropzone.dragOver(highlight);
+    dropzone.dragLeave(unhighlight);
+    dropzone.drop(handleImage, unhighlight);
+    dropzone.attribute('accept', "image/*");
     input = createFileInput(handleImage);
     input.attribute('accept', "image/*");
-    button2 = createButton('save image');
-    input.position(0, 0);
-    button2.position(0, 21);
+    input.style('color', 'transparent');
+    input.parent(dropzone);
+    p = createP('or drag and drop it here.');
+    p.parent(dropzone);
+
+    button2 = select('#button2');
     button2.hide();
 
     let canvas = document.createElement("canvas");
@@ -43,11 +53,20 @@ function setup() {
     });
 }
 
+function highlight() {
+    dropzone.style("background-color", "#00f1");
+}
+
+function unhighlight() {
+    dropzone.style("background-color", "none");
+}
+
 // Create an image if the file is an image.
 function handleImage(file) {
     if (file.type === 'image') {
         img = loadImage(file.data, 
                         function(){
+                            input.attribute('title', file.name);
                             //reset pixel array
                             brightarray = [];
                             fluid = new Fluid(0.5, 0.0000001, 0.00001);

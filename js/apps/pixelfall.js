@@ -1,10 +1,11 @@
 let img;
 var imgw;
 var imgh;
+var dropzone;
+let p;
 let input;
 let button;
 let button2;
-let box;
 let slider;
 let slidertext;
 let pixarray = [];
@@ -13,24 +14,25 @@ let brightarray = [];
 let threshold = 55;
 
 function setup() {
+    dropzone = select('#dropzone');
+    dropzone.dragOver(highlight);
+    dropzone.dragLeave(unhighlight);
+    dropzone.drop(handleImage, unhighlight);
+    dropzone.attribute('accept', "image/*");
     input = createFileInput(handleImage);
     input.attribute('accept', "image/*");
-    button = createButton('process image');
-    button2 = createButton('save image');
-    slider = createSlider(1, 254, 55);
-    slidertext = createDiv("threshold: "+String(threshold));
-    box = createCheckbox('continuous');
-    input.position(0, 0);
-    button.position(0, 70);
-    slider.position(7, 25);
-    slidertext.position(8, 45);
-    box.position(0, 95);
-    slider.size(255);
-    button2.position(0, 130);
+    input.style('color', 'transparent');
+    input.parent(dropzone);
+    p = createP('or drag and drop it here.');
+    p.parent(dropzone);
+    
+    button = select('#button');
+    button2 = select('#button2');
+    slider = select('#slider');
+    slidertext = select('#slidertext');
     button.hide();
     slider.hide();
     slidertext.hide();
-    box.hide();
     button2.hide();
 
     let canvas = document.createElement("canvas");
@@ -50,8 +52,15 @@ function setup() {
     strokeWeight(1);
     noSmooth();
 
+    var counter;
     button.mousePressed(() => {
-        process(pixarray);
+        counter = setInterval(function() {
+            process(pixarray);
+        }, 30);
+    });
+
+    button.mouseReleased(() => {
+        clearInterval(counter);
     });
 
     button2.mousePressed(() => {
@@ -60,20 +69,21 @@ function setup() {
 
     slider.mouseMoved(() => {
         threshold = slider.value();
-        slidertext.html("threshold: "+String(threshold));
+        slidertext.html("Threshold: "+threshold);
     });
 
     slider.mouseReleased(() => {
         threshold = slider.value();
-        slidertext.html("threshold: "+String(threshold));
+        slidertext.html("Threshold: "+threshold);
     });
 }
 
-function draw() {
-    if (box.checked()) {
-        process(pixarray);
-    }
-    
+function highlight() {
+    dropzone.style("background-color", "#00f1");
+}
+
+function unhighlight() {
+    dropzone.style("background-color", "none");
 }
 
 // Create an image if the file is an image.
@@ -81,6 +91,7 @@ function handleImage(file) {
     if (file.type === 'image') {
         img = loadImage(file.data, 
                         function(){
+                            input.attribute('title', file.name);
                             pixarray = [];
                             brightarray = [];
                             imgUpdate();
@@ -88,7 +99,6 @@ function handleImage(file) {
                             button.show();
                             slider.show();
                             slidertext.show();
-                            box.show();
                             button2.show();
                             image(img, 0, 0);
                         });

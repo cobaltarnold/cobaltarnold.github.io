@@ -3,6 +3,7 @@ html, body {
     padding: 0;
     background-color: #F5F5EE;
     overflow-x: hidden;
+    font-family: "Spline Sans Mono", monospace;
 }
 
 #about {
@@ -25,6 +26,7 @@ img {
     overflow: hidden;
     display: flex;
     justify-content: flex-end;
+    border-bottom: 1px solid black;
 }
   
 .menu a {
@@ -33,7 +35,6 @@ img {
     padding: 0.25rem 0.5rem;
     color: black;
     text-decoration: none;
-    font-family: sans-serif;
     border-radius: 0.2rem;
     margin: 0.5rem;
 }
@@ -413,4 +414,121 @@ img {
 
 #canvas:hover {
     cursor: pointer;
+}
+
+.inputs {
+    position: absolute;
+    border: 1px solid black;
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0.5rem;
+}
+
+.inputs * {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+#button2 {
+    margin-bottom: 0;
+}
+
+#box {
+    margin-right: 0.5rem;
+}
+
+/********** Range Input Styles **********/
+/*Range Reset*/
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 15rem;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+    outline: none;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    height: 0.5rem;  
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -0.5px; /* Centers thumb on the track */
+
+    /*custom styles*/
+    background-color: black;
+    height: 0.5rem;
+    width: 1rem;
+    border-radius: 0.25rem;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {   
+    border: none;
+    outline: none;
+    outline-offset: none; 
+}
+
+/******** Firefox styles ********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    height: 0.5rem;
+}
+
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+    border: none; /*Removes extra border that FF applies*/
+    border-radius: 0; /*Removes default border-radius that FF applies*/
+
+    /*custom styles*/
+    background-color: black;
+    height: 0.5rem;
+    width: 1rem;
+    border-radius: 0.25rem;
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+    border: none;
+    outline: none;
+    outline-offset: none; 
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: white;
+    border: 1px solid black;
+    margin: 0;
+}
+
+button {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0.25rem;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1rem;
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
+    font-family: "Spline Sans Mono", monospace;
+}
+
+button:active {
+    background-color: #eee;
 }

@@ -1,6 +1,8 @@
 let img;
 var imgw;
 var imgh;
+var dropzone;
+let p;
 let input;
 let button;
 let button2;
@@ -15,22 +17,26 @@ let attempts = 0;
 let attemptlim = 1000;
 
 function setup() {
+    dropzone = select('#dropzone');
+    dropzone.dragOver(highlight);
+    dropzone.dragLeave(unhighlight);
+    dropzone.drop(handleImage, unhighlight);
+    dropzone.attribute('accept', "image/*");
     input = createFileInput(handleImage);
     input.attribute('accept', "image/*");
-    button = createButton('process image');
-    button2 = createButton('save image');
-    slider = createSlider(1, 75, 55);
-    slidertext = createDiv("threshold: "+String(threshold));
-    input.position(0, 0);
-    slider.position(7, 25);
-    slidertext.position(8, 45);
-    button.position(0, 70);
-    button2.position(0, 90);
-    slider.size(255);
+    input.style('color', 'transparent');
+    input.parent(dropzone);
+    p = createP('or drag and drop it here.');
+    p.parent(dropzone);
+    
+    button = select('#button');
+    button2 = select('#button2');
+    slider = select('#slider');
+    slidertext = select('#slidertext');
     button.hide();
-    button2.hide();
     slider.hide();
     slidertext.hide();
+    button2.hide();
 
     let canvas = document.createElement("canvas");
     let ctx = canvas.getContext("2d", { 
@@ -59,13 +65,21 @@ function setup() {
 
     slider.mouseMoved(() => {
         threshold = slider.value();
-        slidertext.html("threshold: "+String(threshold));
+        slidertext.html("Threshold: "+threshold);
     });
 
     slider.mouseReleased(() => {
         threshold = slider.value();
-        slidertext.html("threshold: "+String(threshold));
+        slidertext.html("Threshold: "+threshold);
     });
+}
+
+function highlight() {
+    dropzone.style("background-color", "#00f1");
+}
+
+function unhighlight() {
+    dropzone.style("background-color", "none");
 }
 
 function process() {
@@ -143,6 +157,7 @@ function handleImage(file) {
     if (file.type === 'image') {
         img = loadImage(file.data, 
                         function(){
+                            input.attribute('title', file.name);
                             brightarray = [];
                             attempts = 0;
                             imgUpdate();
@@ -197,8 +212,8 @@ function initboxes() {
         boxes.push(new Box(0, 0, imgh));
         let size = imgh;
         let x = 0;
-        while (size > 1) {
-            if (x + size < imgw) {
+        while (size >= 1) {
+            if (x + size <= imgw) {
                 for (let y = 0; y < imgh; y += size) {
                     boxes.push(new Box(x, y, size));
                 }
@@ -214,8 +229,8 @@ function initboxes() {
         boxes.push(new Box(0, 0, imgw));
         let size = imgw;
         let y = 0;
-        while (size > 1) {
-            if (y + size < imgh) {
+        while (size >= 1) {
+            if (y + size <= imgh) {
                 for (let x = 0; x < imgw; x += size) {
                     boxes.push(new Box(x, y, size));
                 }

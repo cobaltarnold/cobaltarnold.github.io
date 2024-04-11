@@ -1,10 +1,13 @@
 let img;
 var imgw;
 var imgh;
+var dropzone;
+let p;
 let input;
 let button;
 let invbox;
 let debbox;
+let inputs;
 let pixarray = [];
 let brightarray = [];
 
@@ -19,15 +22,26 @@ let imgstr = 15;
 let img0;
 
 function setup() {
+    dropzone = select('#dropzone');
+    dropzone.dragOver(highlight);
+    dropzone.dragLeave(unhighlight);
+    dropzone.drop(handleImage, unhighlight);
+    dropzone.attribute('accept', "image/*");
     input = createFileInput(handleImage);
     input.attribute('accept', "image/*");
+    input.style('color', 'transparent');
+    input.parent(dropzone);
+    p = createP('or drag and drop it here.');
+    p.parent(dropzone);
+
     invbox = createCheckbox('invert');
     debbox = createCheckbox('brain');
-    button = createButton('save image');
-    input.position(0, 0);
-    invbox.position(0, 25);
-    debbox.position(0, 45);
-    button.position(0, 68);
+    inputs = select('.inputs');
+    invbox.parent(inputs);
+    debbox.parent(inputs);
+    button = createButton('Save Image');
+    button.parent(inputs);
+    button.id('button2');
     button.hide();
 
 
@@ -53,11 +67,20 @@ function setup() {
     });
 }
 
+function highlight() {
+    dropzone.style("background-color", "#00f1");
+}
+
+function unhighlight() {
+    dropzone.style("background-color", "none");
+}
+
 // Create an image if the file is an image.
 function handleImage(file) {
     if (file.type === 'image') {
         img = loadImage(file.data, 
                         function(){
+                            input.attribute('title', file.name);
                             pixarray = [];
                             brightarray = [];
                             flock = [];

@@ -4,11 +4,13 @@ let img;
 var imgw;
 var imgh;
 //user inputs
+var dropzone;
+let p;
 let input;
-let box;
+let button;
+let button2;
 let slider;
 let slidertext;
-let button;
 //array to fill with pixel colors
 let pixarray = [];
 let brightarray = [];
@@ -22,21 +24,26 @@ let spread = 10;
 
 function setup() {
     //initilizing user inputs
+    dropzone = select('#dropzone');
+    dropzone.dragOver(highlight);
+    dropzone.dragLeave(unhighlight);
+    dropzone.drop(handleImage, unhighlight);
+    dropzone.attribute('accept', "image/*");
     input = createFileInput(handleImage);
     input.attribute('accept', "image/*");
-    button = createButton('save image');
-    slider = createSlider(1, 100, 10);
-    slidertext = createDiv('mouse spread');
-    box = createCheckbox('random');
-    input.position(0, 0);
-    slider.position(7, 25);
-    slidertext.position(8, 45);
-    box.position(0, 65);
-    button.position(0, 90);
+    input.style('color', 'transparent');
+    input.parent(dropzone);
+    p = createP('or drag and drop it here.');
+    p.parent(dropzone);
+    
+    button = select('#button');
+    button2 = select('#button2');
+    slider = select('#slider');
+    slidertext = select('#slidertext');
     button.hide();
-    box.hide();
     slider.hide();
     slidertext.hide();
+    button2.hide();
 
     //make canvas and setup for multiple readback operations
     let canvas = document.createElement("canvas");
@@ -53,13 +60,43 @@ function setup() {
 
     background(0);
 
-    slider.mouseReleased(() => {
-        spread = slider.value();
+    var counter;
+    button.mousePressed(() => {
+        counter = setInterval(function() {
+            for (let i = 0; i < 30; i++) {
+                newC = newCircle(random(spacing, width-spacing), random(spacing, height-spacing));
+                if (newC != null) {
+                    circles.push(newC);
+                }
+            }
+        }, 30);
     });
 
-    button.mousePressed(() => {
-        save('circledraw');
+    button.mouseReleased(() => {
+        clearInterval(counter);
     });
+
+    button2.mousePressed(() => {
+        save('circleimg');
+    });
+
+    slider.mouseMoved(() => {
+        spread = slider.value();
+        slidertext.html("Mouse Spread: "+spread);
+    });
+
+    slider.mouseReleased(() => {
+        spread = slider.value();
+        slidertext.html("Mouse Spread: "+spread);
+    });
+}
+
+function highlight() {
+    dropzone.style("background-color", "#00f1");
+}
+
+function unhighlight() {
+    dropzone.style("background-color", "none");
 }
 
 // Create an image if the file is an image.
@@ -67,6 +104,7 @@ function handleImage(file) {
     if (file.type === 'image') {
         img = loadImage(file.data, 
                         function(){
+                            input.attribute('title', file.name);
                             //reset pixel array
                             pixarray = [];
                             brightarray = [];
@@ -74,10 +112,10 @@ function handleImage(file) {
                             imgUpdate();
                             resizeCanvas(imgw, imgh);
                             image(img, 0, 0);
-                            box.show();
                             slider.show();
                             slidertext.show();
                             button.show();
+                            button2.show();
                         });
       }
 }
@@ -144,15 +182,6 @@ function draw() {
     if (newC != null) {
         circles.push(newC);
     }
-
-    if (box.checked()) {
-        for (let i = 0; i < 30; i++) {
-            newC = newCircle(random(spacing, width-spacing), random(spacing, height-spacing));
-            if (newC != null) {
-                circles.push(newC);
-            }
-        }
-    } 
     
     if(img) {
         for (let c of circles) {
