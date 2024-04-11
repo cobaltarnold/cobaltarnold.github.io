@@ -63,19 +63,6 @@ function setup() {
         clearInterval(counter);
     });
 
-    ["mousedown", "touchstart"].forEach(event => {
-        button.addEventListener(event, () => {
-            counter= setInterval(
-                process(pixarray)
-            , 30);
-        });
-    });
-    ["mouseup", "touchend"].forEach(event => {
-        button.addEventListener(event, () => {
-            clearInterval(counter);
-        });
-    });
-
     button2.mousePressed(() => {
         img.save('pixelfall');
     });
