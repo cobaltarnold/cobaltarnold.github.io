@@ -13,7 +13,7 @@ $(document).ready(function(){
     $(".infobg").removeClass("shown");
     $("html, body").css("overflow-y", "visible");
     $("html, body").css("margin-right", "0");
-    $("html, body").css("background", "white");
+    $("html, body").css("background", "#F5F5EE");
     $("#sketchbook").css("margin-right", "0");
     e.stopPropagation();
   } );
