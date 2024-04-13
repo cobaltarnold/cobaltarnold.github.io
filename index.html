@@ -6,8 +6,7 @@
     <title>PORTFOLIO</title>
     <link rel="stylesheet" type="text/css" href="main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.8.0/lib/p5.js"></script>
-    <script src="js/sketch.js"></script>
+    <script src="../js/artwork.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -19,18 +18,70 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <ul class="menu">
-            <li><a href="index.html" class="active">home</a></li>
-            <li><a href="pages/tools.html">tools</a></li>
-            <li><a href="pages/work.html">work</a></li>
-            <li><a href="pages/about.html">about</a></li>
-        </ul>
-    </header>
-    <main class="sketch"></main>
-    <p id="blurb">
-        All elements of this website are the creation of Cobalt Arnold.
-    </p>
+</head>
+<body id="abt">
+  <header>
+    <ul class="menu">
+        <li><a href="pages/tools.html">tools</a></li>
+        <li><a href="pages/work.html">work</a></li>
+        <li><a href="index.html" class="active">about</a></li>
+    </ul>
+  </header>
+  <div class="infobg"></div>
+  <div id="abtcontainer">
+    <div id="about">
+      <div class="piece spcontainer" id="z">
+        <canvas id="canvas" class="sp"></canvas>
+        <img id="selfportrait" class="sp" src="../assets/work/myself/me0.png" alt="">
+      </div>
+      <div class="bio">
+        <strong id="me">My name is Cobalt.</strong> 
+        <p>
+          Within my role as a user experience designer, my biggest interest is in creating 
+          digital experiences in both physical and virtual space. I hope to inspire those 
+          who interact with these experiences to leave with the same curiosity that I have for 
+          almost everything, wondering:
+        </p>
+        <strong>"How does that work?"</strong> 
+        <p>
+          I like to make things with code that can't be done any other way, playing into the nature 
+          of the medium and exploring the possibilities that come with it. I delve into the base 
+          components of images and reinterpret them based on that information, reimagining the way 
+          they're displayed and exposing the nature of their construction. I have a few of those 
+          projects <a href="tools.html">here</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="info" id="z">
+    <div class="images">
+      <img loading="lazy" src="../assets/work/myself/me1.png" alt="">
+      <img loading="lazy" src="../assets/work/myself/me0.png" alt="">
+    </div>
+    <div>
+      <h1>
+        <strong>analog screen (self-portrait)</strong> <i>hand-cut polarized film mosaic</i> 2022
+      </h1>
+      <p>
+        <i>Analog Screen</i> was my second foray into polarized film mosaics. It was my final project 
+        for a drawing class, where I somehow convinced the professor that the work fit the critera of 
+        the assignment, even though there was absolutely zero drawing involved.
+      </p>
+      <p>
+        That's not to say that there wasn't any work put in. I switched to this idea for the project 
+        with just above 48 hours left until the due date. 19 of those hours went into this self-portrait. 
+      </p>
+      <p>
+        Similar to the other self-portrait I had to make that quarter, I did what I could to obscure my 
+        features. Along with the pixellation, the work is just a silhouette unless you view it through a 
+        polarizing filter.
+      </p>
+      <p>
+        The tiles were cut out with a square hole punch and adhered to drawing paper. Each tile is 0.25 
+        inches square.
+      </p>
+    </div>
+  </div>
+  <script src="../js/selfportrait.js"></script>
 </body>
 </html>

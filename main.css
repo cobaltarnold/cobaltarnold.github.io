@@ -19,6 +19,12 @@ img {
     display: flex;
 }
 
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
 .menu {
     list-style-type: none;
     margin: 0;
@@ -27,6 +33,7 @@ img {
     display: flex;
     justify-content: flex-end;
     border-bottom: 1px solid black;
+    background-color: #F5F5EE;
 }
   
 .menu a {
@@ -45,7 +52,7 @@ img {
 }
 
 .menu a.active {
-    color: gray;
+    color: blue;
     font-weight: bold;
     pointer-events: none;
 }
@@ -104,36 +111,15 @@ img {
     filter: invert(7%) sepia(96%) saturate(7462%) hue-rotate(247deg) brightness(115%) contrast(138%);
 }
 
-#about {
-    position: absolute;
-    left: 1vw;
-    bottom: -2.9vw;
-    text-decoration: none;
-    color: white;
-    font-style: oblique;
-    font-weight: bold;
-    font-size: 13vw;
-    user-select: none;
-}
-
-#about:hover {
-    color: transparent;
-    animation-name: blur;
-    animation-duration: 60s;
-}
-
-@keyframes blur {
-    from {text-shadow: 0 0 0px blue;}
-    to {text-shadow: 0 0 50px transparent;}
-}
-
 #artbox {
     margin-left: 20vw;
     margin-right: 20vw;
+    margin-top: 3rem;
 }
 
 #toolbox {
     justify-content: center;
+    margin-top: 6rem;
 }
 
 .piece {
@@ -389,10 +375,19 @@ img {
         padding: 0;
         padding-right: 2.5vh;
     }
+
+    #about {
+        flex-direction: column;
+    }
+
+    .bio {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
 }
 
 #selfportrait {
-    max-height: 90vh;
+    max-height: 80vh;
     width: auto;
     -webkit-touch-callout:none;
     -webkit-user-select:none;
@@ -407,6 +402,15 @@ img {
     width: fit-content;
 }
 
+.sp {
+    border-radius: 0.5rem;
+    margin: 1rem;
+}
+
+#z {
+    max-width: 100%;
+}
+
 #canvas {
     position: absolute;
     user-select: none;
@@ -416,6 +420,31 @@ img {
     cursor: pointer;
 }
 
+#about {
+    display: flex;
+    
+}
+
+#abtcontainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+}
+
+.bio {
+    display: flex;
+    flex-direction: column;
+    max-width: 50vh;
+}
+
+.bio strong {
+    font-size: 2rem;
+}
+
+#me {
+    margin-top: 1rem;
+}
+
 .inputs {
     position: absolute;
     border: 1px solid black;
@@ -423,6 +452,7 @@ img {
     border-radius: 0.5rem;
     padding: 1rem;
     margin: 0.5rem;
+    margin-top: 3.5rem;
 }
 
 .inputs * {
@@ -515,6 +545,10 @@ input[type="checkbox"] {
     background-color: white;
     border: 1px solid black;
     margin: 0;
+}
+
+input[type="checkbox"]:checked {
+    background-color: black;
 }
 
 button {
