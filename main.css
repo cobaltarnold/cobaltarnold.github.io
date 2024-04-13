@@ -32,7 +32,7 @@ header {
     overflow: hidden;
     display: flex;
     justify-content: flex-end;
-    border-bottom: 1px solid black;
+    border-bottom: 1px dotted black;
     background-color: #F5F5EE;
 }
   
@@ -171,6 +171,7 @@ header {
     transform: translate(50%, 0);
     left: -50%;
     display: block;
+    border-radius: 0.5rem;
 }
 
 .preview video {
@@ -417,7 +418,7 @@ header {
 }
 
 #canvas:hover {
-    cursor: pointer;
+    cursor: zoom-in;
 }
 
 #about {
