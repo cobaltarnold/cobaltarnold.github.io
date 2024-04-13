@@ -14,21 +14,33 @@ let img4;
 let images = [];
 
 function setup() {
-  canvas = createCanvas(window.innerWidth, window.innerHeight/1.2);
+  let canvas = document.createElement("canvas");
+  resizeCanvas(window.innerWidth, window.innerHeight);
+  let ctx = canvas.getContext("2d", { 
+      alpha: false,
+      willReadFrequently: true
+  });
+  if (ctx.getContextAttributes) {
+      const attributes = ctx.getContextAttributes();
+      console.log(JSON.stringify(attributes));
+  } else {
+      console.log("CanvasRenderingContext2D.getContextAttributes() is not supported");
+  }
+
   img0 = new Image();
-  img0.src = "assets/icons/bar.png"
+  img0.src = "../assets/icons/bar.png"
   images.push(img0);
   img1 = new Image();
-  img1.src = "assets/icons/cursor.png"
+  img1.src = "../assets/icons/cursor.png"
   images.push(img1);
   img2 = new Image();
-  img2.src = "assets/icons/hourglass.png"
+  img2.src = "../assets/icons/hourglass.png"
   images.push(img2);
   img3 = new Image();
-  img3.src = "assets/icons/move.png"
+  img3.src = "../assets/icons/move.png"
   images.push(img3);
   img4 = new Image();
-  img4.src = "assets/icons/pointer.png"
+  img4.src = "../assets/icons/pointer.png"
   images.push(img4);
   frameRate(30);
   for (let i = 0; i < 5; i++) {
@@ -42,7 +54,8 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  console.log('e');
+  clear();
   for (let i = 0; i < flock.length; i++) {
     for (let j = 0; j < flock[i].length; j++) {
       flock[i][j].flock(flock, i);
@@ -179,36 +192,6 @@ class cursor {
 }
 
 function windowResized() {
-  resizeCanvas(window.innerWidth, window.innerHeight/1.2);
+  resizeCanvas(window.innerWidth, window.innerHeight);
+  console.log('e');
 }
-
-const about = document.getElementById("about");
-const cursorarray = [];
-cursorarray.push('alias', 'cell', 'col-resize', 'copy', 'crosshair', 'e-resize', 'grab', 'grabbing', 'help', 'move', 'n-resize', 'ne-resize', 'nw-resize', 'no-drop', 'pointer', 'progress', 'row-resize', 'text', 'url', 'w-resize', 'wait', 'zoom-in', 'zoom-out');
-var to;
-var cursorswap = function() {
-  let n = random(0, cursorarray.length);
-  n = Math.round(n);
-  $("#about").css("cursor", cursorarray[n]);
-}
-
-var i = 0;
-const anim = [];
-anim.push('grabbing', 'grab', 'cell', 'crosshair', 'col-resize', 'row-resize', 'n-resize', 'ne-resize', 'w-resize', 'nw-resize', 'n-resize', 'ne-resize', 'w-resize', 'nw-resize', 'pointer');
-var cursoranim = function() {
-  if (i > anim.length) {
-    $("#about").css("cursor", "pointer");
-  }
-  $("#about").css("cursor", anim[i]);
-  console.log(i, anim.length);
-  i++;
-}
-
-$(document).ready(function(){
-  $('#about').hover(function(e) {
-    to = window.setInterval(cursoranim, 100);
-  },function(e) {
-    i = 0;
-    window.clearInterval(to);
-  });
-});

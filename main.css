@@ -62,7 +62,7 @@ header {
     padding: 0;
     position: relative;
     display: contents;
-    z-index: -1;
+    z-index: 99;
     user-select: none;
 }
 
