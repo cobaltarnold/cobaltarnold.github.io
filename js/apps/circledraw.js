@@ -42,13 +42,20 @@ function setup() {
     input.attribute('accept', "image/*");
     input.style('color', 'transparent');
     input.parent(dropzone);
-    p = createP('or drag and drop it here.');
-    p.parent(dropzone);
     
     button = select('#button');
     button2 = select('#button2');
     slider = select('#slider');
     slidertext = select('#slidertext');
+
+    if (isMobile) {
+        input.style('margin-bottom: 1rem');
+        button.html("Start Processing");
+    } else {
+        p = createP('or drag and drop it here.');
+        p.parent(dropzone);
+    }
+    
     button.hide();
     slider.hide();
     slidertext.hide();
