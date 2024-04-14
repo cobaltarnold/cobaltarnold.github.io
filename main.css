@@ -170,9 +170,8 @@ header {
 
 .preview img {
     padding: 0;
-    max-height: 20vh;
-    min-height: max-content;
     min-width: 20vh;
+    min-height: 20vh;
     transform: translate(50%, 0);
     left: -50%;
     display: block;
