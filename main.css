@@ -348,6 +348,8 @@ header {
 @media all and (max-width:700px) {
     #artbox {
         flex-direction: column;
+        margin-left: 10vw;
+        margin-right: 10vw;
     }
 
     .info {
@@ -382,8 +384,30 @@ header {
     }
 
     .bio {
-        margin-left: 2rem;
+        margin-left: 1rem;
         margin-right: 2rem;
+    }
+
+    .sp {
+        max-height: 50vh !important;
+    }
+
+    .appbox {
+        flex-direction: column-reverse;
+    }
+
+    .inputbox {
+        display: flex;
+        justify-content: center;
+    }
+
+    .inputs {
+        margin-top: 1rem;
+        margin-left: 0 !important;
+    }
+
+    .p5Canvas {
+        max-height: 40vh !important;
     }
 }
 
@@ -447,13 +471,13 @@ header {
 }
 
 .inputs {
-    position: absolute;
     border: 1px solid black;
     background: white;
     border-radius: 0.5rem;
     padding: 1rem;
-    margin: 0.5rem;
-    margin-top: 3.5rem;
+    width: 12rem;
+    max-height: 80vh;
+    margin-left: 1rem;
 }
 
 .inputs * {
@@ -469,6 +493,11 @@ header {
     margin-right: 0.5rem;
 }
 
+.appbox {
+    display: flex;
+    margin-top: 5rem;
+}
+
 /********** Range Input Styles **********/
 /*Range Reset*/
 input[type="range"] {
@@ -476,7 +505,7 @@ input[type="range"] {
     appearance: none;
     background: transparent;
     cursor: pointer;
-    width: 15rem;
+    width: 11rem;
 }
 
 /* Removes default focus */
