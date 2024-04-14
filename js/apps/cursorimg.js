@@ -45,13 +45,11 @@ function setup() {
     inputs = select('.inputs');
     invbox.parent(inputs);
     debbox.parent(inputs);
-    button = createButton('Save Image');
+    button = select('#button2');
     button.parent(inputs);
-    button.id('button2');
 
     if (isMobile) {
         input.style('margin-bottom: 1rem');
-        button.html("Start Processing");
     } else {
         p = createP('or drag and drop it here.');
         p.parent(dropzone);
