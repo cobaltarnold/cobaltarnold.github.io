@@ -599,3 +599,7 @@ button {
 button:active {
     background-color: #eee;
 }
+
+#loadimg {
+    display: none;
+}
