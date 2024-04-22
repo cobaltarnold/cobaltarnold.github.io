@@ -12,17 +12,20 @@ var imgh;
 var dropzone;
 let p;
 let input;
+let texti;
+let texttext;
 let button;
 let button2;
 let slider;
 let slidertext;
 let brightarray = [];
 
-let boxes = [];
-let threshold = 55;
-let minsize = 5;
-let attempts = 0;
-let attemptlim = 1000;
+let mono;
+let textsize = 13;
+let textw = textsize*0.6;
+let askey = "";
+let fin = "";
+let brightest = 0;
 
 function setup() {
     dropzone = select('#dropzone');
@@ -35,10 +38,10 @@ function setup() {
     input.style('color', 'transparent');
     input.parent(dropzone);
     
+    texti = select('#text');
+    texttext = select('#texttext');
     button = select('#button');
     button2 = select('#button2');
-    slider = select('#slider');
-    slidertext = select('#slidertext');
 
     if (isMobile) {
         input.style('margin-bottom: 1rem');
@@ -48,9 +51,9 @@ function setup() {
         p.parent(dropzone);
     }
     
+    texti.hide();
+    texttext.hide();
     button.hide();
-    slider.hide();
-    slidertext.hide();
     button2.hide();
 
     let canvas = document.createElement("canvas");
@@ -64,28 +67,18 @@ function setup() {
     } else {
         console.log("CanvasRenderingContext2D.getContextAttributes() is not supported");
     }
-    background(0);
-    noFill();
-    noSmooth();
-    stroke(0);
-    strokeWeight(1);
+    textFont('Spline Sans Mono', textsize);
+    textLeading(textsize);
 
     button.mousePressed(() => {
+        fin = "";
+        askey = texti.value();
         process();
     });
 
     button2.mousePressed(() => {
-        save('boxsplit');
-    });
-
-    slider.mouseMoved(() => {
-        threshold = slider.value();
-        slidertext.html("Threshold: "+threshold);
-    });
-
-    slider.mouseReleased(() => {
-        threshold = slider.value();
-        slidertext.html("Threshold: "+threshold);
+        navigator.clipboard.writeText(fin);
+        alert("Copied!");
     });
 }
 
@@ -97,59 +90,18 @@ function unhighlight() {
     dropzone.style("background-color", "none");
 }
 
-function draw() {
-    if (isMobile) {
-        threshold = slider.value();
-        slidertext.html("Threshold: "+threshold);
-    }
-}
-
 function process() {
-    attempts = 0;
-    initboxes();
-    console.log("sorting");
-    threshold = slider.value();
-    console.log("threshold is "+threshold);
-
-    while(attempts < attemptlim) {
-        for (let i = 0; i < boxes.length; i++) {
-            boxes[i].update();
-            boxes[i].display();
+    for (let j = textsize/2; j < img.height; j += textsize) {
+        for (let i = textw/2; i < img.width; i += textw) {
+          let b = brightarray[index(int(i), int(j))];
+          fin += askey.charAt(ceil((b/brightest)*(askey.length-1)));
         }
+        fin += "\n";
     }
-
-    if (attempts > attemptlim) {
-        background(255);
-        for (let i = 0; i < boxes.length; i++) {
-            boxes[i].display();
-        }
-    }
-
+    background(255);
+    fill(0);
+    text(fin, 0, textsize);
     console.log("done");
-}
-
-class Box {
-    constructor(x, y, s) {
-        this.pos = createVector();
-        this.pos.x = x;
-        this.pos.y = y;
-        this.size = s;
-    }
-    
-    display() {
-        rect(this.pos.x, this.pos.y, this.size, this.size);
-    }
-    
-    update() {
-      if (this.size > minsize) {
-        if (pixbrightness(this.pos.x, this.pos.y, this.size) < threshold) {
-            bsplit(this);
-            attempts = 0;
-        } else {
-            attempts++;
-        }
-      }
-    }
 }
   
 function pixbrightness(x, y, s) {
@@ -166,27 +118,21 @@ function pixbrightness(x, y, s) {
     return darkest;
 }
 
-function bsplit(b) {
-    b.size = b.size/2;
-    boxes.push(new Box(b.pos.x + b.size, b.pos.y, b.size));
-    boxes.push(new Box(b.pos.x, b.pos.y + b.size, b.size));
-    boxes.push(new Box(b.pos.x + b.size, b.pos.y + b.size, b.size));
-}
-
 // Create an image if the file is an image.
 function handleImage(file) {
     if (file.type === 'image') {
         img = loadImage(file.data, 
                         function(){
                             input.attribute('title', file.name);
+                            fin = "";
                             brightarray = [];
                             attempts = 0;
                             imgUpdate();
                             resizeCanvas(imgw, imgh);
+                            texti.show();
+                            texttext.show();
                             button.show();
                             button2.show();
-                            slider.show();
-                            slidertext.show();
                             image(img, 0, 0);
                         });
       }
@@ -220,50 +166,13 @@ function pixtoarray(img, array) {
     img.loadPixels();
     for(let i = 0; i < img.pixels.length; i += 4) {
         let b = brightness(color(img.pixels[i], img.pixels[i+1], img.pixels[i+2], 255));
+        if (b > brightest) {
+            brightest = b;
+            console.log(b);
+        }
         brightarray.push(b);
     }
     console.log("pixtoarray done");
-
-    initboxes();
-}
-
-function initboxes() {
-    boxes = [];
-    if(imgh > imgw) {
-        boxes.push(new Box(0, 0, imgh));
-        let size = imgh;
-        let x = 0;
-        while (size >= 1) {
-            if (x + size <= imgw) {
-                for (let y = 0; y < imgh; y += size) {
-                    boxes.push(new Box(x, y, size));
-                }
-            }
-            x += size;
-            if (x > imgw) {
-                x -= size;
-            } 
-            size /= 2;
-        }
-        boxes.shift();
-    } else {
-        boxes.push(new Box(0, 0, imgw));
-        let size = imgw;
-        let y = 0;
-        while (size >= 1) {
-            if (y + size <= imgh) {
-                for (let x = 0; x < imgw; x += size) {
-                    boxes.push(new Box(x, y, size));
-                }
-            }
-            y += size;
-            if (y > imgh) {
-                y -= size;
-            } 
-            size /= 2;
-        }
-        boxes.shift();
-    }
 }
 
 function index(x, y) {

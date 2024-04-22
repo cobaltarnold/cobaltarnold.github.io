@@ -54,7 +54,6 @@ function setup() {
 }
 
 function draw() {
-  console.log('e');
   clear();
   for (let i = 0; i < flock.length; i++) {
     for (let j = 0; j < flock[i].length; j++) {
@@ -193,5 +192,4 @@ class cursor {
 
 function windowResized() {
   resizeCanvas(window.innerWidth, window.innerHeight);
-  console.log('e');
 }

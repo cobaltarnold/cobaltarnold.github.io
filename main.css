@@ -410,8 +410,12 @@ header {
         margin-left: 0 !important;
     }
 
-    .p5Canvas {
+    .sketch .p5Canvas {
         max-height: 40vh !important;
+    }
+
+    .noImg .p5Canvas {
+        max-height: 80vh !important;
     }
 }
 
@@ -582,6 +586,17 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked {
     background-color: black;
+}
+
+input[type="text"] {
+    appearance: none;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: white;
+    border: 1px solid black;
+    margin: 0;
+    font-family: "Spline Sans Mono", monospace;
+    font-weight: bold;
 }
 
 button {
