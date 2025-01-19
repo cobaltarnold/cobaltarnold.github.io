@@ -74,11 +74,12 @@ function setup() {
         fin = "";
         askey = texti.value();
         process();
+        button2.html("Copy Text");
     });
 
     button2.mousePressed(() => {
         navigator.clipboard.writeText(fin);
-        alert("Copied!");
+        button2.html("Copied!");
     });
 }
 
